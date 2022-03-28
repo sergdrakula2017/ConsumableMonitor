@@ -20,7 +20,7 @@ app.Run();*/
 using (Contex db = new Contex())
 {
     
-    Consumable consumable1 = new Consumable { amountConsumable = 1, Name = "rr22", amountInAPackage = 1, dateTime = "31.01.2022", numberOfPackages = 2,packagingCost=222,Status="sklad",sum=222 };
+    Consumable consumable1 = new Consumable { amountConsumable = 1, Name = "rr22", amountInAPackage = 1, dateTime = new DateTime(2020,1,1), numberOfPackages = 2,packagingCost=222,Status="sklad",sum=222 };
     
     db.Consumables.AddRange(consumable1);
     db.SaveChanges();

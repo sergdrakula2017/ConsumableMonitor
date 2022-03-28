@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }//индификатор
         public string Name { get; set; }//Наименовая картриджа 
-        public string dateTime { get; set;}//дата
+        public DateTime dateTime { get; set;}//дата
         public String Status { get; set; }//место положение склад,установлен,списан
         public int numberOfPackages{ get; set; }//колличество упаковок с картриджом
         public int amountInAPackage { get; set; }//кол-во в упаковке 
