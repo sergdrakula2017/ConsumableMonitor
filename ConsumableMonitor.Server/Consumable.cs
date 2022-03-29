@@ -13,3 +13,4 @@
         public int sum { get; set; }//общаяя сумма 
     }
 }
+ 

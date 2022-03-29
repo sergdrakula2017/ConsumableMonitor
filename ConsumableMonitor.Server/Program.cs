@@ -35,7 +35,7 @@ using (Contex db = new Contex())
     {
         Console.WriteLine($"{u.Id}.{u.Name} {u.amountInAPackage} {u.amountConsumable} {u.dateTime} {u.numberOfPackages} {u.packagingCost} {u.Status} {u.sum}");
     }
-
+    
 }
 
 
