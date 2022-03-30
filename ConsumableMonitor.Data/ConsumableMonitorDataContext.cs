@@ -62,7 +62,7 @@ public class ConsumableMonitorDataContext : DbContext
             entity.HasIndex(x => x.EquipmentId).IsUnique(false);
 
             entity.HasOne(x => x.Equipment).WithMany(x => x.Slots).HasForeignKey(x => x.EquipmentId);
-            entity.HasOne(x => x.Installed).WithOne(x => x.InstalledIn).HasForeignKey<EquipmentSlot>(x => new {x.EquipmentId, x.SlotNumber});
+            entity.HasOne(x => x.Installed).WithOne(x => x.InstalledIn).HasForeignKey<EquipmentSlot>(x => new {x.EquipmentId, x.SlotNumber}).IsRequired(false);
         });
 
         modelBuilder.Entity<Equipment>(entity =>
@@ -88,7 +88,7 @@ public class ConsumableMonitorDataContext : DbContext
             entity.Property(x => x.Cost).HasColumnType("money");
 
             entity.HasOne(x => x.Model).WithMany(x => x.Consumables).HasForeignKey(x => x.ModelId);
-            entity.HasOne(x => x.InstalledIn).WithOne(x => x.Installed).HasForeignKey<Consumable>(x => new {x.InstalledInEquipmentId, x.InstalledInNumber});
+            entity.HasOne(x => x.InstalledIn).WithOne(x => x.Installed).HasForeignKey<Consumable>(x => new {x.InstalledInEquipmentId, x.InstalledInNumber}).IsRequired(false);
         });
     }
 }

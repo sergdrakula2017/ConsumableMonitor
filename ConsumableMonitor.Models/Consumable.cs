@@ -6,9 +6,9 @@ public class Consumable : IInventoryDefinition
 {
     public int Id { get; set; }
     public ConsumableModel Model { get; set; }
-    public int InstalledInEquipmentId { get; set; }
-    public int InstalledInNumber { get; set; }
-    public EquipmentSlot InstalledIn { get; set; }
+    public int? InstalledInEquipmentId { get; set; }
+    public int? InstalledInNumber { get; set; }
+    public EquipmentSlot? InstalledIn { get; set; }
     public int ModelId { get; set; }
     public string SerialNumber { get; set; }
     public string Alias { get; set; }
