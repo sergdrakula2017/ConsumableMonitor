@@ -1,10 +1,13 @@
-﻿namespace ConsumableMonitor.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace ConsumableMonitor.Models;
 
 public class EquipmentSlot
 {
     public int EquipmentId { get; set; }
-    public Equipment Equipment { get; set; }
+    [JsonIgnore]
+    public Equipment? Equipment { get; set; }
     public int SlotNumber { get; set; }
-    public int InstalledId { get; set; }
+    [JsonIgnore]
     public Consumable? Installed { get; set; }
 }
