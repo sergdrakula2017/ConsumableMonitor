@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  consumablemonitor.server:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+  consumablemonitor.database:
+    environment:
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
