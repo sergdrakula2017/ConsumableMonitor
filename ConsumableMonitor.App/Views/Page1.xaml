@@ -16,7 +16,7 @@
                 <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" >
 <DataGrid.ContextMenu>
     <ContextMenu >
-        <MenuItem Header="Добавить запись"/>
+        <MenuItem Header="Добавить запись" Click="ADDData"/>
         <MenuItem Header="Удалить запись"/>
         
         

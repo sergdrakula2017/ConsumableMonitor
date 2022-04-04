@@ -6,16 +6,26 @@
         xmlns:local="clr-namespace:ConsumableMonitor.App.Views"
         mc:Ignorable="d"
         Title="AddData" Height="300" Width="600">
-    <Grid Margin="0,0,0,-6">
-        <Button Content="Ок" HorizontalAlignment="Left" Margin="427,244,0,0" VerticalAlignment="Top" Width="66"/>
-        <Button Content="Отмена" HorizontalAlignment="Left" Margin="502,244,0,0" VerticalAlignment="Top"  Width="65" />
-        <TextBlock HorizontalAlignment="Left" Margin="32,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155"><Run Language="ru-ru" Text="Модель"/></TextBlock>
-        <TextBox HorizontalAlignment="Left" Margin="192,98,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Margin="32,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="ru-ru" Text="Стоимость "/></TextBlock>
-        <TextBox HorizontalAlignment="Left" Margin="192,129,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
-        <TextBlock HorizontalAlignment="Left" Margin="32,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.253,0.378"><Run Text="Дат"/><Run Language="ru-ru" Text="а закупки"/><Run Text=" "/></TextBlock>
-        <Button Content="+" HorizontalAlignment="Left" Margin="380,60,0,0" VerticalAlignment="Top"  Width="25" Height="22" />
-        <ComboBox HorizontalAlignment="Left" Margin="192,60,0,0" VerticalAlignment="Top" Width="178" >
+    <Grid ShowGridLines="False" >
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Content="Ок" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Width="60" Height="20" Margin="10"/>
+        <Button Content="Отмена"  HorizontalAlignment="Right" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Width="60" Height="20" Margin="30 10"/>
+        <TextBlock Text="Mодель" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="20,26,0,0"/>
+
+        <TextBlock Text="Стоимость" HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Top" Margin="20,67,0,0"/>
+        <TextBox HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center" Margin="107,0,0,0" Width="133"/>
+        <TextBlock Text="Дата закупки" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="21 106 0 0"/>
+        <TextBox HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="107,104,0,0" Width="133"/>
+        <!-- <TextBlock  HorizontalAlignment="Left" Margin="32,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.253,0.378"><Run Text="Дат"/><Run Language="ru-ru" Text="а закупки"/><Run Text=" "/></TextBlock> -->
+        <Button Content="+" HorizontalAlignment="Left" Margin="260,22,0,0" VerticalAlignment="Top"  Width="25" Height="22" RenderTransformOrigin="-0.2,0.32" />
+        <ComboBox HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" Margin="107,21,0,0" VerticalAlignment="Top" Width="133" >
             <ComboBoxItem Content="Coffie"></ComboBoxItem>
             <ComboBoxItem Content="Tea"></ComboBoxItem>
             <ComboBoxItem Content="Orange Juice"></ComboBoxItem>

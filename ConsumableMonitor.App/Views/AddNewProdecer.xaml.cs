@@ -10,20 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ConsumableMonitor.App.Views
 {
     /// <summary>
-    /// Логика взаимодействия для Page1.xaml
+    /// Логика взаимодействия для AddNewProdecer.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class AddNewProdecer : Window
     {
-        public Page1()
+        public AddNewProdecer()
         {
             InitializeComponent();
         }
+
        
     }
 }
