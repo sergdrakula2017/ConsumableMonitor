@@ -3,40 +3,52 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ConsumableMonitor.App.Views"
         mc:Ignorable="d"
         Title="AddData" Height="300" Width="600">
-    <Grid ShowGridLines="False" >
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
+
+    <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Content="Ок" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Width="60" Height="20" Margin="10"/>
-        <Button Content="Отмена"  HorizontalAlignment="Right" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Width="60" Height="20" Margin="30 10"/>
-        <TextBlock Text="Mодель" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="20,26,0,0"/>
 
-        <TextBlock Text="Стоимость" HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Top" Margin="20,67,0,0"/>
-        <TextBox HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center" Margin="107,0,0,0" Width="133"/>
-        <TextBlock Text="Дата закупки" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="21 106 0 0"/>
-        <TextBox HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="107,104,0,0" Width="133"/>
-        <!-- <TextBlock  HorizontalAlignment="Left" Margin="32,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.253,0.378"><Run Text="Дат"/><Run Language="ru-ru" Text="а закупки"/><Run Text=" "/></TextBlock> -->
-        <Button Content="+" HorizontalAlignment="Left" Margin="260,22,0,0" VerticalAlignment="Top"  Width="25" Height="22" RenderTransformOrigin="-0.2,0.32" />
-        <ComboBox HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" Margin="107,21,0,0" VerticalAlignment="Top" Width="133" >
-            <ComboBoxItem Content="Coffie"></ComboBoxItem>
-            <ComboBoxItem Content="Tea"></ComboBoxItem>
-            <ComboBoxItem Content="Orange Juice"></ComboBoxItem>
-            <ComboBoxItem Content="Milk"></ComboBoxItem>
-            <ComboBoxItem Content="Iced Tea"></ComboBoxItem>
-            <ComboBoxItem Content="Mango Shake"></ComboBoxItem>
-        </ComboBox>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
+            <TextBlock Text="Mодель" Grid.Column="0" Grid.Row="0" />
+            <ComboBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0" Margin="5" />
+            <Button Content="+" Grid.Column="2" Grid.Row="0" Margin="5" Height="22" Width="22" />
 
+            <TextBlock Text="Стоимость" Grid.Column="0" Grid.Row="1" />
+            <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Margin="5" />
 
+            <TextBlock Text="Дата закупки" Grid.Column="0" Grid.Row="2" />
+            <DatePicker Grid.Column="1" Grid.Row="2" Margin="5" HorizontalAlignment="Stretch" />
+        </Grid>
 
-
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
+            <Button Content="Отмена" Width="60" Margin="5" />
+            <Button Content="Ок" Width="60" Margin="5" />
+        </StackPanel>
     </Grid>
 </Window>
