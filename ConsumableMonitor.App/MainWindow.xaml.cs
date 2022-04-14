@@ -28,6 +28,12 @@ namespace ConsumableMonitor.App
         {
             InitializeComponent();
             Content = Ioc.Default.GetRequiredService<ServerConnectionCheckerView>();
+            //*****
+            NavigationWindow win = new NavigationWindow();
+            win.Content = new Page1();
+            win.ShowDialog();
+            //*****
+
         }
     }
 }

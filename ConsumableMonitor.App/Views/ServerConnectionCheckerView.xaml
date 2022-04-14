@@ -9,11 +9,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
+<<<<<<< Updated upstream
         <TextBlock Text="Адрес сервера"/>
         <TextBox Text="{Binding ConnectionUrl}"/>
         <Button Content="Проверить" Command="{Binding CheckConnection}"/>
 
         <Label Content="Статус"/>
         <TextBox IsReadOnly="True" IsReadOnlyCaretVisible="False" Text="{Binding StatusString, Mode=OneWay}"/>
+=======
+        <TextBlock Text="Адрес сервера" />
+        <TextBox Text="{Binding ConnectionUrl}" />
+        <Button Content="Проверить" Command="{Binding CheckConnection}" />
+        <Button Content="1" Command="{Binding CheckConnection}" />
+        <Label Content="Статус" />
+        <TextBox IsReadOnly="True" IsReadOnlyCaretVisible="False" Text="{Binding StatusString, Mode=OneWay}" />
+>>>>>>> Stashed changes
     </StackPanel>
 </UserControl>

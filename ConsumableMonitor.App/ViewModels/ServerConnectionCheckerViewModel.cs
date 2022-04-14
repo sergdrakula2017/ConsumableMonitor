@@ -5,6 +5,7 @@ using System.Windows.Input;
 using ConsumableMonitor.App.Enums;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using ConsumableMonitor.App.Views;
 
 namespace ConsumableMonitor.App.ViewModels;
 
@@ -60,4 +61,20 @@ public class ServerConnectionCheckerViewModel : ObservableObject
         }
          
     }
+    /*
+    private RelayCommand addCommand1;
+    public RelayCommand AddCommand1
+    {
+        get
+        {
+            return addCommand1 ??
+              (addCommand1 = new RelayCommand(ShowAddData));
+        }
+    }
+    public void ShowAddData()
+    {
+        Page1 page1 = new Page1();
+        page1.Show();
+    }*/
+    
 }

@@ -35,6 +35,21 @@ namespace ConsumableMonitor.App
             .ConfigureServices(serviceCollection =>
             {
                 serviceCollection.AddSingleton<ServerConnectionCheckerView>();
+            })
+            .ConfigureServices(ServiceCollection =>
+            {
+                ServiceCollection.AddScoped<Page1>();
+            }).ConfigureServices(ServiceCollection =>
+            {
+                ServiceCollection.AddSingleton<StartPage>();
+            })
+
+            .ConfigureServices(ServiceCollection =>
+            {
+                ServiceCollection.AddScoped<AddData>();
+            }).ConfigureServices(ServiceCollection =>
+            {
+                ServiceCollection.AddSingleton<AddDataViewModel>();
             }).UseDefaultServiceProvider(options =>
             {
 #if DEBUG

@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ConsumableMonitor.App.ViewModels;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+
 
 namespace ConsumableMonitor.App.Views
 {
@@ -22,7 +25,8 @@ namespace ConsumableMonitor.App.Views
     {
         public Page1()
         {
-            InitializeComponent();
+            DataContext = new StartPage();
+            InitializeComponent(); 
         }
     }
 }
