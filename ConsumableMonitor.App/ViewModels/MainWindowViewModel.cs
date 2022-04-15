@@ -49,10 +49,10 @@ internal class MainWindowViewModel : ObservableObject
         foreach (Consumable consumable in await _httpClient.GetFromJsonAsync<Consumable[]>("api/Consumables")) Consumables.Add(consumable);
     }
 
-    public Task AddEquipmentExec()
+    public async Task AddEquipmentExec()
     {
         Ioc.Default.GetRequiredService<AddNewEquipmentView>().ShowDialog();
-        return Task.CompletedTask;
+        await GetData();
     }
 
     public bool RemoveEquipmentCanExec() => SelectedEquipment is not null;
@@ -60,6 +60,6 @@ internal class MainWindowViewModel : ObservableObject
     public async Task RemoveEquipmentExec()
     {
         await _httpClient.DeleteAsync($"api/Equipments/{SelectedEquipment!.Id}");
-        await GetData();
+        
     }
 }
