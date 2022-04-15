@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -45,8 +46,10 @@ internal class MainWindowViewModel : ObservableObject
     {
         Equipments.Clear();
         foreach (Equipment equipment in await _httpClient.GetFromJsonAsync<Equipment[]>("api/Equipments")) Equipments.Add(equipment);
-        Equipments.Clear();
+        Consumables.Clear();
         foreach (Consumable consumable in await _httpClient.GetFromJsonAsync<Consumable[]>("api/Consumables")) Consumables.Add(consumable);
+        OnPropertyChanged(nameof(Equipments));
+        OnPropertyChanged(nameof(Consumables));
     }
 
     public async Task AddEquipmentExec()

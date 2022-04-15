@@ -25,6 +25,6 @@ public abstract class BaseAddViewModel<T> : ObservableObject
 
     public virtual async Task SendExec()
     {
-        await HttpClient.PostAsJsonAsync(Address, JsonSerializer.Serialize(GetValue()));
+        await HttpClient.PostAsJsonAsync(Address, GetValue());
     }
 }

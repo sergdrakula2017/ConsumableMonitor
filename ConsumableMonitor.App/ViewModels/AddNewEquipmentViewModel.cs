@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -49,14 +51,25 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
 
     public override async Task SendExec()
     {
-        HttpResponseMessage result = await HttpClient.PostAsJsonAsync(Address,
-            JsonSerializer.Serialize(new EquipmentModel
-            {
-                Model = Model,
-                Producer = Producer,
-            }));
-
-        modelId = (await HttpClient.GetFromJsonAsync<EquipmentModel>(result.Headers.Location)).Id;
+        EquipmentModel[]? models = await HttpClient.GetFromJsonAsync<EquipmentModel[]>("api/EquipmentModels");
+        EquipmentModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model);
+        if (model is null)
+        {
+            HttpResponseMessage result = await HttpClient.PostAsJsonAsync("api/EquipmentModels",
+                new EquipmentModel
+                {
+                    Model = Model,
+                    Producer = Producer,
+                    Equipments = new List<Equipment>(),
+                    SlotDescriptors = new List<EquipmentSlotDescriptor>(),
+                    Id = 0
+                });
+            modelId = (await HttpClient.GetFromJsonAsync<EquipmentModel>(result.Headers.Location)).Id;
+        }
+        else
+        {
+            modelId = model.Id;
+        }
         await base.SendExec();
     }
 }
