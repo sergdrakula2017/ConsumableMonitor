@@ -1,0 +1,40 @@
+﻿<Window x:Class="ConsumableMonitor.App.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:viewModels="clr-namespace:ConsumableMonitor.App.ViewModels"
+        mc:Ignorable="d"
+        d:DesignHeight="450" d:DesignWidth="800"
+        Title="Items"
+        d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
+
+    <Grid>
+        <TabControl>
+            <TabItem Header="Учет принтеров">
+                <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Equipments}"
+                          IsReadOnly="True">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить принтер…" Command="{Binding AddEquipment}" />
+                            <MenuItem Header="Удалить принтер" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Учет расходных материалов">
+                <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Consumables}"
+                          IsReadOnly="True">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить расходный материал…" />
+                            <MenuItem Header="Списать расходный материал" />
+                            <MenuItem Header="Удалить расходный материал" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

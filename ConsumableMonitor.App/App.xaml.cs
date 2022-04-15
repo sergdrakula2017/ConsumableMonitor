@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 using System.Windows;
 using ConsumableMonitor.App.ViewModels;
 using ConsumableMonitor.App.Views;
@@ -13,43 +6,38 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
-namespace ConsumableMonitor.App
+namespace ConsumableMonitor.App;
+
+/// <summary>
+///     Interaction logic for App.xaml
+/// </summary>
+public partial class App : Application
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    protected override async void OnStartup(StartupEventArgs e)
     {
-        protected override async void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-            IHost? host = Host.CreateDefaultBuilder(e.Args)
+        base.OnStartup(e);
+        IHost? host = Host.CreateDefaultBuilder(e.Args)
             .ConfigureServices(serviceCollection =>
             {
-                serviceCollection.AddSingleton<HttpClient>();
+                serviceCollection.AddTransient(provider =>
+                {
+                    HttpClient client = new();
+                    client.BaseAddress = new("http://localhost:5224");
+                    return client;
+                });
             })
             .ConfigureServices(serviceCollection =>
             {
                 serviceCollection.AddSingleton<ServerConnectionCheckerViewModel>();
+                serviceCollection.AddTransient<AddNewConsumableViewModel>();
+                serviceCollection.AddTransient<AddNewEquipmentViewModel>();
+                serviceCollection.AddSingleton<MainWindowViewModel>();
             })
+            .ConfigureServices(serviceCollection => { serviceCollection.AddSingleton<ServerConnectionCheckerView>(); })
             .ConfigureServices(serviceCollection =>
             {
-                serviceCollection.AddSingleton<ServerConnectionCheckerView>();
-            })
-            .ConfigureServices(ServiceCollection =>
-            {
-                ServiceCollection.AddScoped<Page1>();
-            }).ConfigureServices(ServiceCollection =>
-            {
-                ServiceCollection.AddSingleton<StartPage>();
-            })
-
-            .ConfigureServices(ServiceCollection =>
-            {
-                ServiceCollection.AddScoped<AddData>();
-            }).ConfigureServices(ServiceCollection =>
-            {
-                ServiceCollection.AddSingleton<AddDataViewModel>();
+                serviceCollection.AddTransient<AddNewEquipmentView>();
+                serviceCollection.AddSingleton<MainWindowView>();
             }).UseDefaultServiceProvider(options =>
             {
 #if DEBUG
@@ -59,8 +47,7 @@ namespace ConsumableMonitor.App
 #endif
             })
             .Build();
-            Ioc.Default.ConfigureServices(host.Services);
-            await host.StartAsync().ConfigureAwait(true);
-        }
+        Ioc.Default.ConfigureServices(host.Services);
+        await host.StartAsync().ConfigureAwait(true);
     }
 }

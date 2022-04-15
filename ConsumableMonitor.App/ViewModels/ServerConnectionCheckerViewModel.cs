@@ -5,15 +5,15 @@ using System.Windows.Input;
 using ConsumableMonitor.App.Enums;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using ConsumableMonitor.App.Views;
 
 namespace ConsumableMonitor.App.ViewModels;
 
 public class ServerConnectionCheckerViewModel : ObservableObject
 {
     private readonly HttpClient _httpClient;
-    private HealthStatus? _status;
     private string _connectionUrl = string.Empty;
+    private HealthStatus? _status;
+
     public ServerConnectionCheckerViewModel(HttpClient httpClient)
     {
         _httpClient = httpClient;
@@ -31,12 +31,13 @@ public class ServerConnectionCheckerViewModel : ObservableObject
     }
 
     public string StatusString =>
-        Status switch {
+        Status switch
+        {
             HealthStatus.Unhealthy => "Не работает",
             HealthStatus.Degraded => "Работает частично",
             HealthStatus.Healthy => "Работает",
             null => "Подключение неудачно или адер неверен",
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(),
         };
 
     public ICommand CheckConnection { get; }
@@ -51,7 +52,7 @@ public class ServerConnectionCheckerViewModel : ObservableObject
     {
         try
         {
-            _httpClient.BaseAddress = new Uri(ConnectionUrl);
+            _httpClient.BaseAddress = new(ConnectionUrl);
             string result = await _httpClient.GetStringAsync("/api/health");
             Status = Enum.Parse<HealthStatus>(result);
         }
@@ -59,7 +60,6 @@ public class ServerConnectionCheckerViewModel : ObservableObject
         {
             Status = null;
         }
-         
     }
     /*
     private RelayCommand addCommand1;
@@ -73,8 +73,7 @@ public class ServerConnectionCheckerViewModel : ObservableObject
     }
     public void ShowAddData()
     {
-        Page1 page1 = new Page1();
+        MainWindowView page1 = new MainWindowView();
         page1.Show();
     }*/
-    
 }
