@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 using ConsumableMonitor.Models;
 using Microsoft.Extensions.Primitives;
 
@@ -60,7 +61,7 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
         }
     }
 
-    public override bool CanSend() => !string.IsNullOrWhiteSpace(Producer) && !string.IsNullOrWhiteSpace(Model)&&!string.IsNullOrWhiteSpace(SerialNumber);
+    public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Producer) && !string.IsNullOrWhiteSpace(Model)&&!string.IsNullOrWhiteSpace(SerialNumber);
 
     public override Equipment GetValue() => new()
     {
@@ -72,7 +73,7 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
         SerialNumber = SerialNumber,
     };
     
-    public override async Task SendExec()
+    public override async Task SendExec(Window? window)
     {
         EquipmentModel[]? models = await HttpClient.GetFromJsonAsync<EquipmentModel[]>("api/EquipmentModels");
         EquipmentModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model);
@@ -94,6 +95,6 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
         {
             modelId = model.Id;
         }
-        await base.SendExec();
+        await base.SendExec(window);
     }
 }

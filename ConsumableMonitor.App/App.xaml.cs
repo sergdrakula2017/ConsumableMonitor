@@ -33,11 +33,11 @@ public partial class App : Application
                 serviceCollection.AddTransient<AddNewEquipmentViewModel>();
                 serviceCollection.AddSingleton<MainWindowViewModel>();
             })
-            .ConfigureServices(serviceCollection => { serviceCollection.AddSingleton<ServerConnectionCheckerView>(); })
             .ConfigureServices(serviceCollection =>
             {
                 serviceCollection.AddTransient<AddNewEquipmentView>();
                 serviceCollection.AddSingleton<MainWindowView>();
+                serviceCollection.AddSingleton<ServerConnectionCheckerView>();
             }).UseDefaultServiceProvider(options =>
             {
 #if DEBUG

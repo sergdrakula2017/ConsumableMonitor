@@ -51,8 +51,8 @@
         </Grid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
-            <Button Content="Отмена" Width="60" Margin="5" Command="Close" IsCancel="True"  />
-            <Button Content="Ок" Width="60" Margin="5" Command="{Binding SendCommand}" IsDefault="True"/>
+            <Button Content="Отмена" Width="60" Margin="5" Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" IsCancel="True"  />
+            <Button Content="Ок" Width="60" Margin="5" Command="{Binding SendCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" IsDefault="True"/>
         </StackPanel>
     </Grid>
 
