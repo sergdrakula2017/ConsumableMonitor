@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ConsumableMonitor.Models;
+using Microsoft.Extensions.Primitives;
 
 namespace ConsumableMonitor.App.ViewModels;
 
@@ -12,6 +13,8 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
 {
     private string _model = string.Empty;
     private string _producer = string.Empty;
+    private string _serialNumber = string.Empty;
+    private decimal _cost;
 
     private int modelId;
     public AddNewEquipmentViewModel(HttpClient httpClient) : base(httpClient) { }
@@ -37,18 +40,38 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
         }
     }
 
-    public override bool CanSend() => !string.IsNullOrWhiteSpace(Producer) && !string.IsNullOrWhiteSpace(Model);
+    public string SerialNumber
+    {
+        get => _serialNumber;
+        set
+        {
+            SetProperty(ref _serialNumber, value, nameof(SerialNumber));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
+
+    public decimal Cost
+    {
+        get => _cost;
+        set
+        {
+            SetProperty(ref _cost, value, nameof(Cost));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
+
+    public override bool CanSend() => !string.IsNullOrWhiteSpace(Producer) && !string.IsNullOrWhiteSpace(Model)&&!string.IsNullOrWhiteSpace(SerialNumber);
 
     public override Equipment GetValue() => new()
     {
         Alias = string.Empty,
         ModelId = modelId,
-        Cost = 0,
+        Cost =Cost,
         Scrapped = false,
         Description = string.Empty,
-        SerialNumber = string.Empty,
+        SerialNumber = SerialNumber,
     };
-
+    
     public override async Task SendExec()
     {
         EquipmentModel[]? models = await HttpClient.GetFromJsonAsync<EquipmentModel[]>("api/EquipmentModels");
@@ -62,7 +85,8 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
                     Producer = Producer,
                     Equipments = new List<Equipment>(),
                     SlotDescriptors = new List<EquipmentSlotDescriptor>(),
-                    Id = 0
+                    Id = 0                    
+
                 });
             modelId = (await HttpClient.GetFromJsonAsync<EquipmentModel>(result.Headers.Location)).Id;
         }

@@ -2,7 +2,9 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ConsumableMonitor.App.Views;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 
 namespace ConsumableMonitor.App.ViewModels;
@@ -26,5 +28,7 @@ public abstract class BaseAddViewModel<T> : ObservableObject
     public virtual async Task SendExec()
     {
         await HttpClient.PostAsJsonAsync(Address, GetValue());
+       Ioc.Default.GetRequiredService<AddNewEquipmentView>().Hide();
+        
     }
 }
