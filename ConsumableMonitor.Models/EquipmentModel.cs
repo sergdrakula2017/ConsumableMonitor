@@ -12,4 +12,10 @@ public class EquipmentModel : IModel
     public IList<Equipment>? Equipments { get; set; }
     public string Producer { get; set; }
     public string Model { get; set; }
+    public override string ToString()
+    {
+        return Model;
+    }
+        
+
 }

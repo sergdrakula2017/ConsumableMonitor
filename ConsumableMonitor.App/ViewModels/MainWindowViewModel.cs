@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -49,11 +50,16 @@ internal class MainWindowViewModel : ObservableObject
     public async Task GetData()
     {
         Equipments.Clear();
-        foreach (Equipment equipment in await _httpClient.GetFromJsonAsync<Equipment[]>("api/Equipments")) Equipments.Add(equipment);
-        
         EquipmentModels.Clear(); //
-        foreach(EquipmentModel equipmentModel in await _httpClient.GetFromJsonAsync<EquipmentModel[]>("api/EquipmentModels")) EquipmentModels.Add(equipmentModel);//
-
+        foreach (EquipmentModel equipmentModel in await _httpClient.GetFromJsonAsync<EquipmentModel[]>("api/EquipmentModels"))      
+            EquipmentModels.Add(equipmentModel);
+        
+        foreach (Equipment equipment in await _httpClient.GetFromJsonAsync<Equipment[]>("api/Equipments")) 
+        {
+            Equipments.Add(equipment);
+            equipment.Model=EquipmentModels.FirstOrDefault(x=>x.Id==equipment.ModelId);
+        }
+        
         Consumables.Clear();
         foreach (Consumable consumable in await _httpClient.GetFromJsonAsync<Consumable[]>("api/Consumables")) Consumables.Add(consumable);
         OnPropertyChanged(nameof(Equipments));
