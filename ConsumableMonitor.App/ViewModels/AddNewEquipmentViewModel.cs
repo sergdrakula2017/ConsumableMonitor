@@ -16,6 +16,8 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
     private string _producer = string.Empty;
     private string _serialNumber = string.Empty;
     private decimal _cost;
+    private string _description = string.Empty;
+    private string _alias = string.Empty;
 
     private int modelId;
     public AddNewEquipmentViewModel(HttpClient httpClient) : base(httpClient) { }
@@ -61,16 +63,37 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
         }
     }
 
-    public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Producer) && !string.IsNullOrWhiteSpace(Model)&&!string.IsNullOrWhiteSpace(SerialNumber);
+    public string Description
+    {
+        get => _description;
+        set
+        {
+            SetProperty(ref _description, value, nameof(Description));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
+
+    public string Alias
+    {
+        get => _alias;
+        set
+        {
+            SetProperty(ref _alias, value, nameof(Alias));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
+
+    public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Producer) && !string.IsNullOrWhiteSpace(Model)&&!string.IsNullOrWhiteSpace(SerialNumber)&&!string.IsNullOrWhiteSpace(Alias)&&!string.IsNullOrWhiteSpace(Description);
 
     public override Equipment GetValue() => new()
     {
-        Alias = string.Empty,
+        Alias = Alias,
         ModelId = modelId,
         Cost =Cost,
         Scrapped = false,
-        Description = string.Empty,
+        Description = Description,
         SerialNumber = SerialNumber,
+       
     };
     
     public override async Task SendExec(Window? window)

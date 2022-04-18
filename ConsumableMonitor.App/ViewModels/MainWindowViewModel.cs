@@ -22,6 +22,7 @@ internal class MainWindowViewModel : ObservableObject
         AddEquipment = new AsyncRelayCommand(AddEquipmentExec);
         RemoveEquipment = new AsyncRelayCommand(RemoveEquipmentExec, RemoveEquipmentCanExec);
         Equipments = new();
+        EquipmentModels = new();//
         Consumables = new();
         _ = GetData();
     }
@@ -40,16 +41,24 @@ internal class MainWindowViewModel : ObservableObject
     }
 
     public ObservableCollection<Equipment> Equipments { get; }
+
+    public ObservableCollection<EquipmentModel> EquipmentModels { get; }//
+    
     public ObservableCollection<Consumable> Consumables { get; }
 
     public async Task GetData()
     {
         Equipments.Clear();
         foreach (Equipment equipment in await _httpClient.GetFromJsonAsync<Equipment[]>("api/Equipments")) Equipments.Add(equipment);
+        
+        EquipmentModels.Clear(); //
+        foreach(EquipmentModel equipmentModel in await _httpClient.GetFromJsonAsync<EquipmentModel[]>("api/EquipmentModels")) EquipmentModels.Add(equipmentModel);//
+
         Consumables.Clear();
         foreach (Consumable consumable in await _httpClient.GetFromJsonAsync<Consumable[]>("api/Consumables")) Consumables.Add(consumable);
         OnPropertyChanged(nameof(Equipments));
         OnPropertyChanged(nameof(Consumables));
+        OnPropertyChanged(nameof(EquipmentModels));//
     }
 
     public async Task AddEquipmentExec()

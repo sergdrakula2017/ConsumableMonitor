@@ -33,6 +33,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+
             </Grid.RowDefinitions>
 
             <TextBlock Text="Производитель" Grid.Column="0" Grid.Row="0" />
@@ -48,6 +54,16 @@
 
             <TextBlock Text="Стоимость" Grid.Column="0" Grid.Row="3" />
             <xctk:DecimalUpDown HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Margin="5" Text="{Binding Cost}"/>
+
+            <TextBlock Text="Псевдоним" Grid.Column="0" Grid.Row="4" />
+            <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="5" Text="{Binding Alias}"/>
+
+            <TextBlock Text="Описание" Grid.Column="0" Grid.Row="6" />
+            <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="6" Margin="5" Text="{Binding Description}"/>
+
+            <TextBlock Text="Слот" Grid.Column="0" Grid.Row="7" />
+            <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="7" Grid.Row="7" Margin="5" Text="{Binding Description}"/>
+
         </Grid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
