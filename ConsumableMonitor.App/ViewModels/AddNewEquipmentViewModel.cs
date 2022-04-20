@@ -92,7 +92,7 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
         Cost =Cost,
         Scrapped = false,
         Description = Description,
-        SerialNumber = SerialNumber,
+        SerialNumber = SerialNumber,        
        
     };
     

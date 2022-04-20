@@ -12,9 +12,9 @@
     <Grid>
         <TabControl>
             <TabItem Header="Учет принтеров">
-                <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Equipments}" 
-                          IsReadOnly="True">
-                    <DataGrid.ContextMenu>
+                <DataGrid  d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Equipments}" 
+                          IsReadOnly="True" SelectedItem="{Binding SelectedItem}"  >
+                    <DataGrid.ContextMenu> 
                         <ContextMenu>
                             <MenuItem Header="Добавить принтер…" Command="{Binding AddEquipment}" />
                             <MenuItem Header="Удалить принтер" />

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using ConsumableMonitor.App.Views;
 using ConsumableMonitor.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -58,6 +61,7 @@ internal class MainWindowViewModel : ObservableObject
         {
             Equipments.Add(equipment);
             equipment.Model=EquipmentModels.FirstOrDefault(x=>x.Id==equipment.ModelId);
+            //equipment.Producer =EquipmentModels.FirstOrDefault();
         }
         
         Consumables.Clear();
@@ -79,5 +83,19 @@ internal class MainWindowViewModel : ObservableObject
     {
         await _httpClient.DeleteAsync($"api/Equipments/{SelectedEquipment!.Id}");
         
+    }
+    private object selectedItem;
+
+    public object SelectedItem
+    {
+        get { return this.selectedItem; }
+        set
+        {
+            if (value != this.selectedItem)
+            {
+                this.selectedItem = value;
+                this.OnPropertyChanged("SelectedItem");//считывангие выделенной строки 
+            }
+        }
     }
 }
