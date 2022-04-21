@@ -15,14 +15,14 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
 {
     private string _model = string.Empty;
     private int    _installedInEquipmentId;
-    private int _installedInNumber;
-
+    private int    _installedInNumber;
+    //private int _familyId;
     private int    modelId;
     private string _serialNumber = string.Empty;
     private string _alias = string.Empty;
     private string _description =string.Empty;
     private decimal _cost;
-    public bool _scrapped;
+    private string _producer = string.Empty;
 
     public AddNewConsumableViewModel(HttpClient httpClient) : base(httpClient) { }
     public override string Address { get; set; } = "api/Consumables";
@@ -33,6 +33,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         set
         {
             SetProperty(ref _model, value,nameof(Model));
+            SendCommand.NotifyCanExecuteChanged();
         }
     }
 
@@ -76,7 +77,19 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         }
     }
 
-    public override bool CanSend(Window? window) =>!string.IsNullOrWhiteSpace(_model) &&string.IsNullOrWhiteSpace(_serialNumber);
+    public string Producer
+    {
+        get => _producer;
+        set
+        {
+            SetProperty(ref _producer, value, nameof(Producer));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
+
+     
+
+    public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Model) &&string.IsNullOrWhiteSpace(SerialNumber);
     public override Consumable GetValue() => new()
     {
         Alias = Alias,
@@ -85,6 +98,32 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         Scrapped = false,
         Description = Description,
         SerialNumber = SerialNumber,
-        
+
     };
+
+    public override async Task SendExec(Window? window)
+    {
+        ConsumableModel[]? models = await HttpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels");
+        ConsumableModel? model = models.FirstOrDefault(x => x.Model == Model);
+        if (model is null)
+        {
+            HttpResponseMessage result = await HttpClient.PostAsJsonAsync("api/ConsumableModels",
+                new ConsumableModel
+                {
+                    Model = Model,
+                    Producer = Producer,
+                    SupportedSlotDescriptors = new List<EquipmentSlotDescriptor>(),
+                    Consumables = new List<Consumable>(),
+                    Id = 0
+                });
+            modelId = (await HttpClient.GetFromJsonAsync<ConsumableModel>(result.Headers.Location)).Id;
+
+        }
+        else
+        {
+            modelId = model.Id;
+        }
+
+        await base.SendExec(window);
+    }
 }

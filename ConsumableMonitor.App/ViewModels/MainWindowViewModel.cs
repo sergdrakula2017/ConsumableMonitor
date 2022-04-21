@@ -24,6 +24,7 @@ internal class MainWindowViewModel : ObservableObject
     {
         _httpClient = httpClient;
         AddEquipment = new AsyncRelayCommand(AddEquipmentExec);
+        AddConsumable = new AsyncRelayCommand(AddConsumableExec);
         RemoveEquipment = new AsyncRelayCommand(RemoveEquipmentExec, RemoveEquipmentCanExec);
         Equipments = new();
         EquipmentModels = new();//
@@ -32,6 +33,7 @@ internal class MainWindowViewModel : ObservableObject
     }
 
     public IRelayCommand AddEquipment { get; }
+    public IRelayCommand AddConsumable { get; }
     public IRelayCommand RemoveEquipment { get; }
 
     public Equipment? SelectedEquipment
@@ -74,6 +76,12 @@ internal class MainWindowViewModel : ObservableObject
     public async Task AddEquipmentExec()
     {
         Ioc.Default.GetRequiredService<AddNewEquipmentView>().ShowDialog();
+        await GetData();
+    }
+
+    public async Task AddConsumableExec()//
+    {
+        Ioc.Default.GetRequiredService<AddNewConsumableView>().ShowDialog();
         await GetData();
     }
 

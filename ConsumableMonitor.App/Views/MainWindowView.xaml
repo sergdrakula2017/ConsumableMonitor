@@ -27,7 +27,7 @@
                           IsReadOnly="True">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Добавить расходный материал…" />
+                            <MenuItem Header="Добавить расходный материал…" Command="{Binding AddConsumable}" />
                             <MenuItem Header="Списать расходный материал" />
                             <MenuItem Header="Удалить расходный материал" />
                         </ContextMenu>
