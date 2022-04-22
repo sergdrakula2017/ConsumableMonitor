@@ -36,6 +36,7 @@ public partial class App : Application
             .ConfigureServices(serviceCollection =>
             {
                 serviceCollection.AddTransient<AddNewEquipmentView>();
+                serviceCollection.AddTransient<AddNewConsumableView>();//
                 serviceCollection.AddSingleton<MainWindowView>();
                 serviceCollection.AddSingleton<ServerConnectionCheckerView>();
             }).UseDefaultServiceProvider(options =>

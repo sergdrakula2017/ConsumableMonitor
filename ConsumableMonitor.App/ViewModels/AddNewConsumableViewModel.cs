@@ -89,7 +89,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
 
      
 
-    public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Model) &&string.IsNullOrWhiteSpace(SerialNumber);
+    public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Model) && !string.IsNullOrWhiteSpace(SerialNumber);
     public override Consumable GetValue() => new()
     {
         Alias = Alias,
@@ -98,7 +98,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         Scrapped = false,
         Description = Description,
         SerialNumber = SerialNumber,
-
+        
     };
 
     public override async Task SendExec(Window? window)

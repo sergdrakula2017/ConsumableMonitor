@@ -29,6 +29,7 @@ internal class MainWindowViewModel : ObservableObject
         Equipments = new();
         EquipmentModels = new();//
         Consumables = new();
+        ConsumableModels = new();//-
         _ = GetData();
     }
 
@@ -51,6 +52,8 @@ internal class MainWindowViewModel : ObservableObject
     public ObservableCollection<EquipmentModel> EquipmentModels { get; }//
     
     public ObservableCollection<Consumable> Consumables { get; }
+    
+    public ObservableCollection<ConsumableModel> ConsumableModels { get; } //-
 
     public async Task GetData()
     {
@@ -65,12 +68,22 @@ internal class MainWindowViewModel : ObservableObject
             equipment.Model=EquipmentModels.FirstOrDefault(x=>x.Id==equipment.ModelId);
             //equipment.Producer =EquipmentModels.FirstOrDefault();
         }
-        
+
+
+        ConsumableModels.Clear();
+        foreach (ConsumableModel consumableModel in await _httpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels")) ConsumableModels.Add(consumableModel);//-
+
         Consumables.Clear();
-        foreach (Consumable consumable in await _httpClient.GetFromJsonAsync<Consumable[]>("api/Consumables")) Consumables.Add(consumable);
+        foreach (Consumable consumable in await _httpClient.GetFromJsonAsync<Consumable[]>("api/Consumables"))
+        {
+            Consumables.Add(consumable);
+            consumable.Model=ConsumableModels.FirstOrDefault(x=>x.Id==consumable.ModelId);//-
+        }
+        
         OnPropertyChanged(nameof(Equipments));
         OnPropertyChanged(nameof(Consumables));
         OnPropertyChanged(nameof(EquipmentModels));//
+        OnPropertyChanged(nameof(ConsumableModels));//-
     }
 
     public async Task AddEquipmentExec()
