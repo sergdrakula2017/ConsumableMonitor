@@ -16,7 +16,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
     private string _model = string.Empty;
     private int    _installedInEquipmentId;
     private int    _installedInNumber;
-    //private int _familyId;
+    private int _familyId;
     private int    modelId;
     private string _serialNumber = string.Empty;
     private string _alias = string.Empty;
@@ -87,7 +87,15 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         }
     }
 
-     
+    public int FamiliId
+    {
+        get => _familyId;
+        set
+        {
+            SetProperty(ref _familyId, value, nameof(FamiliId));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
 
     public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Model) && !string.IsNullOrWhiteSpace(SerialNumber);
     public override Consumable GetValue() => new()
@@ -114,6 +122,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
                     Producer = Producer,
                     SupportedSlotDescriptors = new List<EquipmentSlotDescriptor>(),
                     Consumables = new List<Consumable>(),
+                    FamilyId =FamiliId,
                     Id = 0
                 });
             modelId = (await HttpClient.GetFromJsonAsync<ConsumableModel>(result.Headers.Location)).Id;
