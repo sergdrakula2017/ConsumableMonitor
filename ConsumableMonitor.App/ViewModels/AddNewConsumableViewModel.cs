@@ -157,13 +157,13 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         if (model is null)
         {
             HttpResponseMessage result = await HttpClient.PostAsJsonAsync("api/ConsumableModels",
-                new EquipmentModel
+                new ConsumableModel
                 {
                     Model = Model,
                     Producer = Producer,
-                    Equipments = new List<Equipment>(),
-                    SlotDescriptors = new List<EquipmentSlotDescriptor>(),
-                    Id = 0
+                    Consumables = new List<Consumable>(),
+                    SupportedSlotDescriptors = new List<EquipmentSlotDescriptor>(),
+                    Id = 0,
 
                 });
             modelId = (await HttpClient.GetFromJsonAsync<ConsumableModel>(result.Headers.Location)).Id;
