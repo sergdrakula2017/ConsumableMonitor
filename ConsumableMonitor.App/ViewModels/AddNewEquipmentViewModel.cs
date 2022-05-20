@@ -110,7 +110,7 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
                     Equipments = new List<Equipment>(),
                     SlotDescriptors = new List<EquipmentSlotDescriptor>(),
                     Id = 0                    
-
+                    
                 });
             modelId = (await HttpClient.GetFromJsonAsync<EquipmentModel>(result.Headers.Location)).Id;
         }

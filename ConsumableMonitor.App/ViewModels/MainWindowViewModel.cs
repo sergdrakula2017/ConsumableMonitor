@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ConsumableMonitor.App.Views;
 using ConsumableMonitor.Models;
+using ConsumableMonitor.Server.Controllers;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -30,6 +31,7 @@ internal class MainWindowViewModel : ObservableObject
         EquipmentModels = new();//
         Consumables = new();
         ConsumableModels = new();//-
+        ConsumableModelsFamilies = new();
         _ = GetData();
     }
 
@@ -54,6 +56,7 @@ internal class MainWindowViewModel : ObservableObject
     public ObservableCollection<Consumable> Consumables { get; }
     
     public ObservableCollection<ConsumableModel> ConsumableModels { get; } //-
+    public ObservableCollection<ConsumableModelFamily> ConsumableModelsFamilies { get; }//--
 
     public async Task GetData()
     {
@@ -69,6 +72,11 @@ internal class MainWindowViewModel : ObservableObject
             //equipment.Producer =EquipmentModels.FirstOrDefault();
         }
 
+        ConsumableModelsFamilies.Clear();
+        foreach (ConsumableModelFamily consumableModelFamily in await _httpClient.GetFromJsonAsync<ConsumableModelFamily[]>($"api/ConsumableModelFamilies"))
+        ConsumableModelsFamilies.Add(consumableModelFamily);
+            
+        
 
         ConsumableModels.Clear();
         foreach (ConsumableModel consumableModel in await _httpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels")) ConsumableModels.Add(consumableModel);//-
@@ -78,18 +86,20 @@ internal class MainWindowViewModel : ObservableObject
         {
             Consumables.Add(consumable);
             consumable.Model=ConsumableModels.FirstOrDefault(x=>x.Id==consumable.ModelId);//-
+            
         }
         
         OnPropertyChanged(nameof(Equipments));
         OnPropertyChanged(nameof(Consumables));
         OnPropertyChanged(nameof(EquipmentModels));//
         OnPropertyChanged(nameof(ConsumableModels));//-
+        OnPropertyChanged(nameof(ConsumableModelsFamilies));
     }
 
     public async Task AddEquipmentExec()
     {
         Ioc.Default.GetRequiredService<AddNewEquipmentView>().ShowDialog();
-        await GetData();
+        await GetData(); 
     }
 
     public async Task AddConsumableExec()//

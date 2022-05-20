@@ -3,6 +3,7 @@ using System;
 using ConsumableMonitor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ConsumableMonitor.Data.Migrations
 {
     [DbContext(typeof(ConsumableMonitorDataContext))]
-    partial class ConsumableMonitorDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220519223617_slotsfixc")]
+    partial class slotsfixc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

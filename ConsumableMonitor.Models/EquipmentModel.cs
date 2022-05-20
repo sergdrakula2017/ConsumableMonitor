@@ -15,7 +15,7 @@ public class EquipmentModel : IModel
     public override string ToString()
     {
         return Model ;
-       
+        
     }
         
 

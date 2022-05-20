@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConsumableMonitor.Models\ConsumableMonitor.Models.csproj" />
+    <ProjectReference Include="..\ConsumableMonitor.Server\ConsumableMonitor.Server.csproj" />
   </ItemGroup>
 
 </Project>

@@ -37,6 +37,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
 
             </Grid.RowDefinitions>
 
@@ -54,7 +61,12 @@
             <TextBox Grid.Column="1" Grid.Row="3" Margin="3" Text="{Binding SerialNumber}"/>
             <TextBox Grid.Column="1" Grid.Row="4" Margin="3" Text="{Binding Model}"/>
 
-            
+            <TextBox Grid.Column="1" Grid.Row="5" Margin="3" Text="{Binding Description }"/>
+            <TextBox Grid.Column="1" Grid.Row="6" Margin="3" Text="{Binding Alias }"/>
+            <TextBox Grid.Column="1" Grid.Row="7" Margin="3" Text="{Binding Producer }"/>
+            <TextBox Grid.Column="1" Grid.Row="8" Margin="3" Text="{Binding FamilyId }"/>
+            <TextBox Grid.Column="1" Grid.Row="9" Margin="3" Text="{Binding InstalledInEquipmentId }"/>
+            <TextBox Grid.Column="1" Grid.Row="10" Margin="3" Text="{Binding InstalledInNumber }"/>
 
 
         </Grid>

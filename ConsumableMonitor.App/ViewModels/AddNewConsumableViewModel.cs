@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ConsumableMonitor.Models;
 using Microsoft.Extensions.Primitives;
+using NuGet.DependencyResolver;
 
 namespace ConsumableMonitor.App.ViewModels;
 
@@ -23,6 +24,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
     private string _description =string.Empty;
     private decimal _cost;
     private string _producer = string.Empty;
+   // private int _installedIn;
 
     public AddNewConsumableViewModel(HttpClient httpClient) : base(httpClient) { }
     public override string Address { get; set; } = "api/Consumables";
@@ -87,15 +89,45 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         }
     }
 
-    public int FamiliId
+    public int FamilyId
     {
         get => _familyId;
         set
         {
-            SetProperty(ref _familyId, value, nameof(FamiliId));
+            SetProperty(ref _familyId, value, nameof(FamilyId));
             SendCommand.NotifyCanExecuteChanged();
         }
     }
+    //--220513
+    public int InstalledInEquipmentId
+    {
+        get => _installedInEquipmentId;
+        set
+        {
+            SetProperty(ref _installedInEquipmentId, value, nameof(InstalledInEquipmentId));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
+
+    public int InstalledInNumber
+    {
+        get => _installedInNumber;
+        set
+        {
+            SetProperty(ref _installedInNumber, value, nameof(InstalledInNumber));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
+
+   /* public int InstalledIn
+    {
+        get => _installedIn;
+        set
+        {
+            SetProperty(ref _installedIn, value, nameof(InstalledIn));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }*/
 
     public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Model) && !string.IsNullOrWhiteSpace(SerialNumber);
     public override Consumable GetValue() => new()
@@ -106,32 +138,41 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         Scrapped = false,
         Description = Description,
         SerialNumber = SerialNumber,
+        InstalledInEquipmentId = null,
+        InstalledInNumber = null,
+        //InstalledIn  = InstalledIn,
         
     };
 
     public override async Task SendExec(Window? window)
     {
+        var familyResult = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, $"api/ConsumableModelFamilies/{FamilyId}"));
+        if (!familyResult.IsSuccessStatusCode)
+        {
+            await HttpClient.PostAsJsonAsync("api/ConsumableModelFamilies",new ConsumableModelFamily(){Id = FamilyId});
+        }
+        
         ConsumableModel[]? models = await HttpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels");
-        ConsumableModel? model = models.FirstOrDefault(x => x.Model == Model);
+        ConsumableModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model && x.FamilyId ==FamilyId);
         if (model is null)
         {
             HttpResponseMessage result = await HttpClient.PostAsJsonAsync("api/ConsumableModels",
-                new ConsumableModel
+                new EquipmentModel
                 {
                     Model = Model,
                     Producer = Producer,
-                    SupportedSlotDescriptors = new List<EquipmentSlotDescriptor>(),
-                    Consumables = new List<Consumable>(),
-                    FamilyId =FamiliId,
+                    Equipments = new List<Equipment>(),
+                    SlotDescriptors = new List<EquipmentSlotDescriptor>(),
                     Id = 0
+
                 });
             modelId = (await HttpClient.GetFromJsonAsync<ConsumableModel>(result.Headers.Location)).Id;
-
         }
         else
         {
             modelId = model.Id;
         }
+
 
         await base.SendExec(window);
     }
