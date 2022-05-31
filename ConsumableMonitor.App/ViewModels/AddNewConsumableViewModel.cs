@@ -153,7 +153,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         }
         
         ConsumableModel[]? models = await HttpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels");
-        ConsumableModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model && x.FamilyId ==FamilyId);
+        ConsumableModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model );
         if (model is null)
         {
             HttpResponseMessage result = await HttpClient.PostAsJsonAsync("api/ConsumableModels",
