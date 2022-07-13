@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using System;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -9,6 +10,7 @@ using System.Windows;
 using ConsumableMonitor.Models;
 using Microsoft.Extensions.Primitives;
 using NuGet.DependencyResolver;
+using System.Collections.ObjectModel;
 
 namespace ConsumableMonitor.App.ViewModels;
 
@@ -24,9 +26,35 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
     private string _description =string.Empty;
     private decimal _cost;
     private string _producer = string.Empty;
-   // private int _installedIn;
+    // private int _installedIn;
+    private readonly HttpClient _httpClient;
 
-    public AddNewConsumableViewModel(HttpClient httpClient) : base(httpClient) { }
+    public AddNewConsumableViewModel(HttpClient httpClient) : base(httpClient)
+   {
+       _httpClient = httpClient;
+       Task load = new Task(async () => await GetData());
+       load.Start();
+       load.Wait();
+        
+       
+
+    }
+
+
+    public async Task GetData()
+    {
+        ConsumableModels.Clear();
+        foreach (ConsumableModel consumableModel in await _httpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels"))
+        {
+            ConsumableModels.Add(consumableModel);//-
+            
+        }
+    }
+
+
+
+    public ObservableCollection<ConsumableModel> ConsumableModels { get; } = new ObservableCollection<ConsumableModel>();
+
     public override string Address { get; set; } = "api/Consumables";
 
     public string Model
@@ -172,6 +200,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         {
             modelId = model.Id;
         }
+
 
 
         await base.SendExec(window);

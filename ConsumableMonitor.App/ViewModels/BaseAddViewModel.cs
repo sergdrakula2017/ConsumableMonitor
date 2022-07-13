@@ -39,4 +39,5 @@ public abstract class BaseAddViewModel<T> : ObservableObject
         await HttpClient.PostAsJsonAsync(Address, GetValue());
         await CancelExec(window);
     }
+
 }
