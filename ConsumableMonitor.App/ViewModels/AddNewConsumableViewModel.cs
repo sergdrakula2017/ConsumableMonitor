@@ -19,7 +19,7 @@ namespace ConsumableMonitor.App.ViewModels;
 
 internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable> 
 {
-    private string _model = string.Empty;
+    private ConsumableModel _model ;
     private int    _installedInEquipmentId;
     private int    _installedInNumber;
     private int _familyId;
@@ -65,7 +65,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
 
     public override string Address { get; set; } = "api/Consumables";
 
-    public string Model
+    public ConsumableModel Model
     {
         get => _model;
         set
@@ -165,7 +165,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         }
     }*/
 
-    public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Model) && !string.IsNullOrWhiteSpace(SerialNumber);
+    public override bool CanSend(Window? window) => Model is not null && !string.IsNullOrWhiteSpace(SerialNumber);
     public override Consumable GetValue() => new()
     {
         Alias = Alias,
@@ -182,32 +182,11 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
 
     public override async Task SendExec(Window? window)
     {
-        var familyResult = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, $"api/ConsumableModelFamilies/{FamilyId}"));
-        if (!familyResult.IsSuccessStatusCode)
-        {
-            await HttpClient.PostAsJsonAsync("api/ConsumableModelFamilies",new ConsumableModelFamily(){Id = FamilyId});
-        }
+       
         
-        ConsumableModel[]? models = await HttpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels");
-        ConsumableModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model );
-        if (model is null)
-        {
-            HttpResponseMessage result = await HttpClient.PostAsJsonAsync("api/ConsumableModels",
-                new ConsumableModel
-                {
-                    Model = Model,
-                    Producer = Producer,
-                    Consumables = new List<Consumable>(),
-                    SupportedSlotDescriptors = new List<EquipmentSlotDescriptor>(),
-                    Id = 0,
-
-                });
-            modelId = (await HttpClient.GetFromJsonAsync<ConsumableModel>(result.Headers.Location)).Id;
-        }
-        else
-        {
-            modelId = model.Id;
-        }
+        
+            modelId = Model.Id;
+        
 
 
 

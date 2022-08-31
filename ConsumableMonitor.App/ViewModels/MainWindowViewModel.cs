@@ -20,13 +20,14 @@ internal class MainWindowViewModel : ObservableObject
 {
     private readonly HttpClient _httpClient;
     private Equipment? _selectedEquipment;
-
+    private Consumable? _selectedConsumable;
     public MainWindowViewModel(HttpClient httpClient)
     {
         _httpClient = httpClient;
         AddEquipment = new AsyncRelayCommand(AddEquipmentExec);
         AddConsumable = new AsyncRelayCommand(AddConsumableExec);
         RemoveEquipment = new AsyncRelayCommand(RemoveEquipmentExec, RemoveEquipmentCanExec);
+        RemoveConsumable = new AsyncRelayCommand(RemoveConsumableExec, RemoveConsumableCanExec);
         Equipments = new();
         EquipmentModels = new();//
         Consumables = new();
@@ -38,6 +39,7 @@ internal class MainWindowViewModel : ObservableObject
     public IRelayCommand AddEquipment { get; }
     public IRelayCommand AddConsumable { get; }
     public IRelayCommand RemoveEquipment { get; }
+    public IRelayCommand RemoveConsumable { get; }
 
     public Equipment? SelectedEquipment
     {
@@ -46,6 +48,16 @@ internal class MainWindowViewModel : ObservableObject
         {
             SetProperty(ref _selectedEquipment, value, nameof(SelectedEquipment));
             RemoveEquipment.NotifyCanExecuteChanged();
+        }
+    }
+
+    public Consumable? SelectedConsumable
+    {
+        get => _selectedConsumable;
+        set
+        {
+            SetProperty(ref _selectedConsumable, value, nameof(SelectedConsumable));
+            RemoveConsumable.NotifyCanExecuteChanged();
         }
     }
 
@@ -113,20 +125,20 @@ internal class MainWindowViewModel : ObservableObject
     public async Task RemoveEquipmentExec()
     {
         await _httpClient.DeleteAsync($"api/Equipments/{SelectedEquipment!.Id}");
-        
+        Equipments.Remove(SelectedEquipment);
+        SelectedEquipment = null;
     }
-    private object selectedItem;
 
-    public object SelectedItem
+
+    public bool RemoveConsumableCanExec() => SelectedConsumable is not null;
+
+    public async Task RemoveConsumableExec()
     {
-        get { return this.selectedItem; }
-        set
-        {
-            if (value != this.selectedItem)
-            {
-                this.selectedItem = value;
-                this.OnPropertyChanged("SelectedItem");//считывангие выделенной строки 
-            }
-        }
+        await _httpClient.DeleteAsync($"api/Consumables/{SelectedConsumable!.Id}");
+        Consumables.Remove(SelectedConsumable);
+        SelectedConsumable = null;
     }
+
+
+    
 }

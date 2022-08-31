@@ -13,23 +13,23 @@
         <TabControl>
             <TabItem Header="Учет принтеров">
                 <DataGrid  d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Equipments}" 
-                          IsReadOnly="True" SelectedItem="{Binding SelectedItem}"  >
+                          IsReadOnly="True" SelectedItem="{Binding SelectedEquipment}"  >
                     <DataGrid.ContextMenu> 
                         <ContextMenu>
                             <MenuItem Header="Добавить принтер…" Command="{Binding AddEquipment}" />
-                            <MenuItem Header="Удалить принтер" />
+                            <MenuItem Header="Удалить принтер" Command="{Binding RemoveEquipment}" />
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>
             </TabItem>
             <TabItem Header="Учет расходных материалов">
                 <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Consumables}"
-                          IsReadOnly="True">
+                          IsReadOnly="True" SelectedItem="{Binding SelectedConsumable}">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Добавить расходный материал…" Command="{Binding AddConsumable}" />
                             <MenuItem Header="Списать расходный материал" />
-                            <MenuItem Header="Удалить расходный материал" />
+                            <MenuItem Header="Удалить расходный материал" Command="{Binding RemoveConsumable}" />
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>

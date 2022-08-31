@@ -58,17 +58,18 @@ namespace ConsumableMonitor.App.ViewModels
 
         public override async Task SendExec(Window? window)
         {
-            HttpClient.PostAsJsonAsync("api/ConsumableModelFamilies", new ConsumableModelFamily() { Id = 1 });
+            var family = await HttpClient.PostAsJsonAsync("api/ConsumableModelFamilies", new ConsumableModelFamily() {  });
             ConsumableModel[]? models = await HttpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels");
             ConsumableModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model);
             if (model is null)
             {
+                var F = await family.Content.ReadFromJsonAsync<ConsumableModelFamily>();
                 HttpResponseMessage result = await HttpClient.PostAsJsonAsync("api/ConsumableModels",
                     new ConsumableModel
                     {
                         Model = Model,
                         Producer = Producer,
-                        
+                        FamilyId = F.Id,
 
                     });
                 //modelId = (await HttpClient.GetFromJsonAsync<ConsumableModel>(result.Headers.Location)).Id;

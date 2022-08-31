@@ -48,10 +48,10 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Модель" Grid.Column="0" Grid.Row="1" />
-            <TextBox Grid.Column="1" Grid.Row="1" Margin="3" Text="{Binding Model }"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="3" Text="{Binding Model,UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock Text="Производитель" Grid.Column="0" Grid.Row="2" />
-            <TextBox Grid.Column="1" Grid.Row="2" Margin="3" Text="{Binding Producer }"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="3" Text="{Binding Producer,UpdateSourceTrigger=PropertyChanged }"/>
                         <TextBlock Text="Производитель" Grid.Column="0" Grid.Row="2" />
             
 
