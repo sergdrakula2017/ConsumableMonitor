@@ -11,6 +11,9 @@ using ConsumableMonitor.Models;
 using Microsoft.Extensions.Primitives;
 using NuGet.DependencyResolver;
 using System.Collections.ObjectModel;
+using ConsumableMonitor.App.Views;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.Input;
 
 namespace ConsumableMonitor.App.ViewModels;
 
@@ -26,6 +29,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
     private string _description =string.Empty;
     private decimal _cost;
     private string _producer = string.Empty;
+
     // private int _installedIn;
     private readonly HttpClient _httpClient;
 
@@ -33,24 +37,28 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
    {
        _httpClient = httpClient;
        Task load = new Task(async () => await GetData());
-       load.Start();
-       load.Wait();
-        
-       
+       load.RunSynchronously();
+       AddNewConsumableModel = new AsyncRelayCommand(AddNewCOnsumableModelExec);
+   }
 
-    }
-
+    public IRelayCommand AddNewConsumableModel { get; }
 
     public async Task GetData()
     {
         ConsumableModels.Clear();
-        foreach (ConsumableModel consumableModel in await _httpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels"))
+        var array = await _httpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels");
+        foreach (ConsumableModel consumableModel in array)
         {
             ConsumableModels.Add(consumableModel);//-
             
         }
     }
 
+    public async Task AddNewCOnsumableModelExec()//
+    {
+        Ioc.Default.GetRequiredService<AddNewConsumableModelView>().ShowDialog();
+        await GetData();
+    }
 
 
     public ObservableCollection<ConsumableModel> ConsumableModels { get; } = new ObservableCollection<ConsumableModel>();

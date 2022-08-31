@@ -31,12 +31,14 @@ public partial class App : Application
                 serviceCollection.AddSingleton<ServerConnectionCheckerViewModel>();
                 serviceCollection.AddTransient<AddNewConsumableViewModel>();
                 serviceCollection.AddTransient<AddNewEquipmentViewModel>();
+                serviceCollection.AddTransient<AddNewConsumableModelViewModel>();
                 serviceCollection.AddSingleton<MainWindowViewModel>();
             })
             .ConfigureServices(serviceCollection =>
             {
                 serviceCollection.AddTransient<AddNewEquipmentView>();
                 serviceCollection.AddTransient<AddNewConsumableView>();//
+                serviceCollection.AddTransient<AddNewConsumableModelView>();
                 serviceCollection.AddSingleton<MainWindowView>();
                 serviceCollection.AddSingleton<ServerConnectionCheckerView>();
             }).UseDefaultServiceProvider(options =>
