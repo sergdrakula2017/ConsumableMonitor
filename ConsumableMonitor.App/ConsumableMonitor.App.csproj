@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
     <Folder Include="Enums\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConsumableMonitor.Models\ConsumableMonitor.Models.csproj" />
+    <ProjectReference Include="..\ConsumableMonitor.Server\ConsumableMonitor.Server.csproj" />
   </ItemGroup>
 
 </Project>

@@ -60,7 +60,7 @@ public class EquipmentsController : ControllerBase
         _context.Equipments.Add(equipment);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetEquipment", new {id = equipment.Id}, equipment);
+        return CreatedAtAction(nameof(GetEquipment), new {id = equipment.Id}, equipment);
     }
 
     // DELETE: api/Equipments/5

@@ -8,6 +8,10 @@ public class Equipment : IInventoryDefinition
     public int Id { get; set; }
     [JsonIgnore]
     public EquipmentModel? Model { get; set; }
+    /*
+    [JsonIgnore] //
+    public EquipmentModel? Producer { get; set; }//
+    */
     [JsonIgnore]
     public IList<EquipmentSlot>? Slots { get; set; }
     public int ModelId { get; set; }
