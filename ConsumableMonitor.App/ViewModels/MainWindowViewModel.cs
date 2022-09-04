@@ -28,6 +28,7 @@ internal class MainWindowViewModel : ObservableObject
         AddConsumable = new AsyncRelayCommand(AddConsumableExec);
         RemoveEquipment = new AsyncRelayCommand(RemoveEquipmentExec, RemoveEquipmentCanExec);
         RemoveConsumable = new AsyncRelayCommand(RemoveConsumableExec, RemoveConsumableCanExec);
+       // ScrapedEquimpent = new new AsyncRelayCommand(scra);
         Equipments = new();
         EquipmentModels = new();//
         Consumables = new();
@@ -134,6 +135,7 @@ internal class MainWindowViewModel : ObservableObject
 
     public async Task RemoveConsumableExec()
     {
+        
         await _httpClient.DeleteAsync($"api/Consumables/{SelectedConsumable!.Id}");
         Consumables.Remove(SelectedConsumable);
         SelectedConsumable = null;
