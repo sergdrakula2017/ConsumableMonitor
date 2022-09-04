@@ -3,7 +3,7 @@ using ConsumableMonitor.Models.Interfaces;
 
 namespace ConsumableMonitor.Models;
 
-public class Equipment : IInventoryDefinition
+public record class Equipment : IInventoryDefinition
 {
     public int Id { get; set; }
     [JsonIgnore]

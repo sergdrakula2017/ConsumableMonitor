@@ -18,7 +18,7 @@ public class ConsumableModel : IModel
     public string Model { get; set; }
     public override string ToString()
     {
-        return Model;
+        return Producer+" "+Model;
 
     }
 }

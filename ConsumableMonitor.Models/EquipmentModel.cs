@@ -14,7 +14,7 @@ public class EquipmentModel : IModel
     public string Model { get; set; }
     public override string ToString()
     {
-        return Model ;
+        return Producer + " " + Model;
         
     }
         
