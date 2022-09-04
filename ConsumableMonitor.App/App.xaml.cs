@@ -22,7 +22,7 @@ public partial class App : Application
                 serviceCollection.AddTransient(provider =>
                 {
                     HttpClient client = new();
-                    client.BaseAddress = new("http://localhost:5224");
+                    client.BaseAddress = new("http://172.17.20.75:5240/");
                     return client;
                 });
             })

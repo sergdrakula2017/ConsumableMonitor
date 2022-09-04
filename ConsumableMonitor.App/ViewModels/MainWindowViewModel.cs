@@ -28,6 +28,8 @@ internal class MainWindowViewModel : ObservableObject
         AddConsumable = new AsyncRelayCommand(AddConsumableExec);
         RemoveEquipment = new AsyncRelayCommand(RemoveEquipmentExec, RemoveEquipmentCanExec);
         RemoveConsumable = new AsyncRelayCommand(RemoveConsumableExec, RemoveConsumableCanExec);
+        ScrapEquipment = new AsyncRelayCommand(ScrapEquipmentExec,ScrapEquipmentCanExec);
+        ScrapConsumable = new AsyncRelayCommand(ScrapConsumableExec, ScrapConsumableCanExec);
         Equipments = new();
         EquipmentModels = new();//
         Consumables = new();
@@ -40,6 +42,8 @@ internal class MainWindowViewModel : ObservableObject
     public IRelayCommand AddConsumable { get; }
     public IRelayCommand RemoveEquipment { get; }
     public IRelayCommand RemoveConsumable { get; }
+    public IRelayCommand ScrapEquipment { get; }
+    public IRelayCommand ScrapConsumable { get; }
 
     public Equipment? SelectedEquipment
     {
@@ -139,6 +143,21 @@ internal class MainWindowViewModel : ObservableObject
         SelectedConsumable = null;
     }
 
+    public bool ScrapEquipmentCanExec() => SelectedEquipment is not null;
 
-    
+    public async Task ScrapEquipmentExec()
+    {   if (SelectedEquipment is null) return;
+        SelectedEquipment = SelectedEquipment with { Scrapped = true };
+        await _httpClient.PutAsJsonAsync<Equipment>($"api/Equipments/{SelectedEquipment!.Id}",SelectedEquipment);
+        OnPropertyChanged(nameof(Equipments));
+    }
+
+    public bool ScrapConsumableCanExec() => SelectedConsumable is not null;
+    public async Task ScrapConsumableExec()
+    {
+        if (SelectedConsumable is null) return;
+        SelectedConsumable = SelectedConsumable with { Scrapped = true };
+        await _httpClient.PutAsJsonAsync<Consumable>($"api/Consumables/{SelectedConsumable!.Id}", SelectedConsumable);
+        OnPropertyChanged(nameof(Consumables));
+    }
 }

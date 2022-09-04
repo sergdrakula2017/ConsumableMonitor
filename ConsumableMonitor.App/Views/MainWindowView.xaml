@@ -13,25 +13,41 @@
         <TabControl>
             <TabItem Header="Учет принтеров">
                 <DataGrid  d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Equipments}" 
-                          IsReadOnly="True" SelectedItem="{Binding SelectedEquipment}"  >
+                          IsReadOnly="True" SelectedItem="{Binding SelectedEquipment}" AutoGenerateColumns="False"  >
                     <DataGrid.ContextMenu> 
                         <ContextMenu>
                             <MenuItem Header="Добавить принтер…" Command="{Binding AddEquipment}" />
                             <MenuItem Header="Удалить принтер" Command="{Binding RemoveEquipment}" />
                         </ContextMenu>
                     </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
+                        <DataGridTextColumn Header="Серийный номер" Binding="{Binding SerialNumber}"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Alias}"/>
+                        <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
+                        <DataGridTextColumn Header="Стоимость" Binding="{Binding Cost}"/>
+                        
+                    </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
             <TabItem Header="Учет расходных материалов">
                 <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Consumables}"
-                          IsReadOnly="True" SelectedItem="{Binding SelectedConsumable}">
+                          IsReadOnly="True" SelectedItem="{Binding SelectedConsumable}" AutoGenerateColumns="False">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Добавить расходный материал…" Command="{Binding AddConsumable}" />
-                            <MenuItem Header="Списать расходный материал" />
+                            <MenuItem Header="Списать расходный материал" Command="{Binding ScrapConsumable}"/>
                             <MenuItem Header="Удалить расходный материал" Command="{Binding RemoveConsumable}" />
                         </ContextMenu>
                     </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
+                        <DataGridTextColumn Header="Серийный номер" Binding="{Binding SerialNumber}"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Alias}"/>
+                        <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
+                        <DataGridTextColumn Header="Стоимость" Binding="{Binding Cost}"/>
+                        <DataGridCheckBoxColumn Header="Списан" Binding="{Binding Scrapped}"/>
+                    </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
 
