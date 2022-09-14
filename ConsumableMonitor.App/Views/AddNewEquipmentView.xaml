@@ -4,8 +4,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        d:DesignHeight="450" d:DesignWidth="800"
-        Title="AddNewEquipmentView" d:DataContext="{d:DesignData BaseAddViewModel}">
+        d:DesignHeight="250" d:DesignWidth="800"
+        Title="Добавление техники" d:DataContext="{d:DesignData BaseAddViewModel}">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -60,10 +60,10 @@
 
             <TextBlock Text="Описание" Grid.Column="0" Grid.Row="6" />
             <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="6" Margin="5" Text="{Binding Description}"/>
-
+<!--
             <TextBlock Text="Слот" Grid.Column="0" Grid.Row="7" />
             <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="7" Grid.Row="7" Margin="5" Text="{Binding Description}"/>
-
+-->
         </Grid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">

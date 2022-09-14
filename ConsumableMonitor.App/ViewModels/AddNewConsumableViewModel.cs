@@ -29,7 +29,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
     private string _description =string.Empty;
     private decimal _cost;
     private string _producer = string.Empty;
-
+    private string _color;
     // private int _installedIn;
     private readonly HttpClient _httpClient;
 
@@ -155,6 +155,16 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         }
     }
 
+    public string Color
+    {
+        get => _color;
+        set
+        {
+            SetProperty(ref _color, value, nameof(Color));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
+
    /* public int InstalledIn
     {
         get => _installedIn;
@@ -177,7 +187,7 @@ internal class AddNewConsumableViewModel : BaseAddViewModel<Consumable>
         InstalledInEquipmentId = null,
         InstalledInNumber = null,
         //InstalledIn  = InstalledIn,
-        
+        Color = Color,
     };
 
     public override async Task SendExec(Window? window)

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
        
-        Title="AddNewConsumableModelView" Height="150" Width="600" d:DataContext="{d:DesignData BaseAddViewModel}">
+        Title="Добавление новой модели " Height="150" Width="600" d:DataContext="{d:DesignData BaseAddViewModel}">
 
     <Window.Resources>
         <Style TargetType="TextBlock">

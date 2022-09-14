@@ -6,7 +6,7 @@
         xmlns:viewModels="clr-namespace:ConsumableMonitor.App.ViewModels"
         mc:Ignorable="d"
         d:DesignHeight="450" d:DesignWidth="800"
-        Title="Items"
+        Title="Consumable monitor"
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
 
     <Grid>
@@ -47,6 +47,27 @@
                         <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
                         <DataGridTextColumn Header="Стоимость" Binding="{Binding Cost}"/>
                         <DataGridCheckBoxColumn Header="Списан" Binding="{Binding Scrapped}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <TabItem Header="Списанные расходные материалы ">
+                <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Consumables}"
+                          IsReadOnly="True" SelectedItem="{Binding SelectedConsumable}" AutoGenerateColumns="False">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить расходный материал…" Command="{Binding AddConsumable}" />
+                            <MenuItem Header="Списать расходный материал" Command="{Binding ScrapConsumable}"/>
+                            <MenuItem Header="Удалить расходный материал" Command="{Binding RemoveConsumable}" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>                        
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Alias}"/>
+                        <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
+                        <DataGridTextColumn Header="Стоимость" Binding="{Binding Cost}"/>
+                        <DataGridCheckBoxColumn Header="Списан" Binding="{Binding Scrapped}"/>
+                        <DataGridTextColumn Header="Дата списания" />
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

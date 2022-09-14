@@ -12,6 +12,7 @@ public class EquipmentModel : IModel
     public IList<Equipment>? Equipments { get; set; }
     public string Producer { get; set; }
     public string Model { get; set; }
+    public string ModelCompability { get; set; }//подерживаемые ус-ва 
     public override string ToString()
     {
         return Producer + " " + Model;

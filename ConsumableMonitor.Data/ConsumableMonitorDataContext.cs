@@ -86,6 +86,8 @@ public class ConsumableMonitorDataContext : DbContext
             entity.Property(x => x.Description);
             entity.Property(x => x.Scrapped);
             entity.Property(x => x.Cost).HasColumnType("money");
+            entity.Property(x => x.Color);
+
 
             entity.HasOne(x => x.Model).WithMany(x => x.Consumables).HasForeignKey(x => x.ModelId);
             entity.HasOne(x => x.InstalledIn).WithOne(x => x.Installed).HasForeignKey<Consumable>(x => new {x.InstalledInEquipmentId, x.InstalledInNumber}).IsRequired(false);

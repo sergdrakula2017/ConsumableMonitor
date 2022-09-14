@@ -8,4 +8,6 @@ public interface IInventoryDefinition
     string Description { get; set; }
     bool Scrapped { get; set; }
     decimal Cost { get; set; }
+   
+
 }

@@ -21,4 +21,5 @@ public record class Equipment : IInventoryDefinition
     public string Description { get; set; }
     public decimal Cost { get; set; }
     public bool Scrapped { get; set; }
+    
 }

@@ -20,6 +20,7 @@ namespace ConsumableMonitor.App.ViewModels
         private readonly HttpClient _httpClient;
         private string _model = string.Empty;
         private string _producer = string.Empty;
+        private string _modelCompability = string.Empty;
         //private int modelId;
         public override string Address { get; set; } = "api/ConsumableModels";
 
@@ -43,6 +44,16 @@ namespace ConsumableMonitor.App.ViewModels
             }
         }
 
+        public string ModelCompability
+        {
+            get => _modelCompability;
+            set
+            {
+                SetProperty(ref _modelCompability, value, nameof(ModelCompability));
+                SendCommand.NotifyCanExecuteChanged();
+            }
+        }
+
         public AddNewConsumableModelViewModel(HttpClient httpClient) : base(httpClient)
         {
 
@@ -51,16 +62,16 @@ namespace ConsumableMonitor.App.ViewModels
         {
            Model = Model,
            Producer = Producer,
-
+           ModelCompability = ModelCompability,
         };
-        public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Producer) && !string.IsNullOrWhiteSpace(Model);
+        public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Producer) && !string.IsNullOrWhiteSpace(Model) && !string.IsNullOrWhiteSpace(ModelCompability);
 
 
         public override async Task SendExec(Window? window)
         {
             var family = await HttpClient.PostAsJsonAsync("api/ConsumableModelFamilies", new ConsumableModelFamily() {  });
             ConsumableModel[]? models = await HttpClient.GetFromJsonAsync<ConsumableModel[]>("api/ConsumableModels");
-            ConsumableModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model);
+            ConsumableModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model && x.ModelCompability==ModelCompability);
             if (model is null)
             {
                 var F = await family.Content.ReadFromJsonAsync<ConsumableModelFamily>();
@@ -69,6 +80,7 @@ namespace ConsumableMonitor.App.ViewModels
                     {
                         Model = Model,
                         Producer = Producer,
+                        ModelCompability=ModelCompability,
                         FamilyId = F.Id,
 
                     });

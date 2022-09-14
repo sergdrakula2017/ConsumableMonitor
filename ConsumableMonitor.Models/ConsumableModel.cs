@@ -16,6 +16,7 @@ public class ConsumableModel : IModel
     public ConsumableModelFamily? Family { get; set; }
     public string Producer { get; set; }
     public string Model { get; set; }
+    public string ModelCompability { get; set; }
     public override string ToString()
     {
         return Producer+" "+Model;
