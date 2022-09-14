@@ -15,7 +15,7 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
     private string _model = string.Empty;
     private string _producer = string.Empty;
     private string _serialNumber = string.Empty;
-    private decimal _cost;
+    private string _modelCompability = string.Empty;
     private string _description = string.Empty;
     private string _alias = string.Empty;
 
@@ -53,15 +53,7 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
         }
     }
 
-    public decimal Cost
-    {
-        get => _cost;
-        set
-        {
-            SetProperty(ref _cost, value, nameof(Cost));
-            SendCommand.NotifyCanExecuteChanged();
-        }
-    }
+    
 
     public string Description
     {
@@ -83,13 +75,22 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
         }
     }
 
+    public string ModelCompability
+    {
+        get => _modelCompability;
+        set
+        {
+            SetProperty(ref _modelCompability,value, nameof(ModelCompability));
+            SendCommand.NotifyCanExecuteChanged();
+        }
+    }
+
     public override bool CanSend(Window? window) => !string.IsNullOrWhiteSpace(Producer) && !string.IsNullOrWhiteSpace(Model)&&!string.IsNullOrWhiteSpace(SerialNumber)&&!string.IsNullOrWhiteSpace(Alias)&&!string.IsNullOrWhiteSpace(Description);
 
     public override Equipment GetValue() => new()
     {
         Alias = Alias,
         ModelId = modelId,
-        Cost =Cost,
         Scrapped = false,
         Description = Description,
         SerialNumber = SerialNumber,        
@@ -99,7 +100,7 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
     public override async Task SendExec(Window? window)
     {
         EquipmentModel[]? models = await HttpClient.GetFromJsonAsync<EquipmentModel[]>("api/EquipmentModels");
-        EquipmentModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model);
+        EquipmentModel? model = models.FirstOrDefault(x => x.Producer == Producer && x.Model == Model && x.ModelCompability==ModelCompability);
         if (model is null)
         {
             HttpResponseMessage result = await HttpClient.PostAsJsonAsync("api/EquipmentModels",
@@ -107,6 +108,8 @@ internal class AddNewEquipmentViewModel : BaseAddViewModel<Equipment>
                 {
                     Model = Model,
                     Producer = Producer,
+                    ModelCompability = ModelCompability,
+
                     Equipments = new List<Equipment>(),
                     SlotDescriptors = new List<EquipmentSlotDescriptor>(),
                     Id = 0                    

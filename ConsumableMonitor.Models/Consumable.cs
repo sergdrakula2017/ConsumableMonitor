@@ -13,7 +13,7 @@ public record class Consumable : IInventoryDefinition
     [JsonIgnore]
     public EquipmentSlot? InstalledIn { get; set; }
     public int ModelId { get; set; }
-    public string SerialNumber { get; set; }
+    public string? SerialNumber { get; set; }
     public string Alias { get; set; }
     public string Description { get; set; }
     public decimal Cost { get; set; }//delete

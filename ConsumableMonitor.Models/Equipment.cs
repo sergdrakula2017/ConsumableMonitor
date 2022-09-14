@@ -15,8 +15,8 @@ public record class Equipment : IInventoryDefinition
     [JsonIgnore]
     public IList<EquipmentSlot>? Slots { get; set; }
     public int ModelId { get; set; }
-
-    public string SerialNumber { get; set; }
+    
+    public string? SerialNumber { get; set; }
     public string Alias { get; set; }
     public string Description { get; set; }
     public decimal Cost { get; set; }
